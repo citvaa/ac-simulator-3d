@@ -61,6 +61,8 @@ int main()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     int fbWidth = 0, fbHeight = 0;
     glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+    windowWidth = fbWidth;
+    windowHeight = fbHeight;
     glViewport(0, 0, fbWidth, fbHeight);
 
     const Color backgroundColor{ 0.10f, 0.12f, 0.16f, 1.0f };
@@ -277,8 +279,8 @@ int main()
     bool prevToggleCull = false;
 
     AppState appState{};
-    // Start with AC on so lamp and lamp-light can be observed
-    appState.isOn = true;
+    // Start with AC off by default.
+    appState.isOn = false;
 
     // particle drops
     struct Particle { glm::vec3 pos; glm::vec3 vel; float radius; bool alive; };

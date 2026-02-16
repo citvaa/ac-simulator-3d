@@ -1,56 +1,41 @@
-# AC Simulator (OpenGL, GLFW, GLEW, FreeType)
+# AC Simulator 3D
 
-2D air-conditioner remote simulator: vent animation, desired/current temperature displays, status icons (heating/cooling/target), condensate bowl you must empty, FPS overlay, and a custom remote-shaped cursor.
+Overview
 
-## Requirements
-- OpenGL 3.3+ capable GPU
-- C++17 toolchain and development packages: GLFW, GLEW, FreeType, GLM (install via Homebrew on macOS: `brew install pkg-config glfw glew freetype glm`)
-- `stb_image` included at `Header/stb_image.h`
+This repository contains AC Simulator 3D, a C++ project that implements a 3D simulation and renderer. The project is built with CMake and organizes code and resources into the following directories: `Source/`, `Header/`, `Shaders/`, and `Assets/`.
 
-## Build (CLion / CMake)
-1) Open the project in CLion (it will use the CMakeLists.txt in the repo root) or run CMake manually from the repo root:
-   mkdir build && cd build && cmake .. && cmake --build .
-2) If CMake can't find libraries on macOS, ensure Homebrew's bin/include/lib are visible to CLion (Toolchains) or install the packages above.
-3) On Windows use vcpkg or NuGet to provide GLFW/GLEW/FreeType and point CMake to the include/lib dirs.
+Key Features
 
-## Run
-Run the binary from the repository root so shader relative paths resolve, for example from repo root:
+- Real-time 3D simulation and rendering (configured in CMake; typically uses OpenGL/GLFW or another graphics backend)
+- Clear project layout for sources, headers, shaders, and assets
 
-```bash
-./build/ac-simulator
-```
+Requirements
 
-## CLion tips
-- Set the Run/Debug configuration Working directory to the project root so shader paths resolve.
-- If libraries aren't found, set CMake variables or add Homebrew include/lib paths in CLion settings.
+- A C++ compiler with C++17 support or newer
+- CMake (3.x+)
+- System libraries listed in `CMakeLists.txt` (e.g. OpenGL, GLFW, GLEW/GLAD, GLM). Check `CMakeLists.txt` for exact dependencies and how to obtain them.
 
-Scene lighting: there is a scene light source with configurable color, intensity and position which illuminates all objects on the scene.
+Quick Start (example)
 
-## Run
-After building, start from the repo root so shader relative paths resolve, e.g.:
+1. Create a build directory and run CMake:
 
-```powershell
-.\x64\Debug\ac-simulator.exe
-```
+   mkdir build && cd build
+   cmake ..
+   cmake --build .
 
-## Controls
-- Click the lamp (red circle) to power on/off.
-- Click the arrow button: top half increases, bottom half decreases desired temperature.
-- Arrow Up/Down keys do the same.
-- Space empties the bowl and unlocks the unit when full.
-- ESC closes the app.
+2. Run the generated executable (name depends on CMake configuration):
 
-## Simulation Logic
-- Vent animates only when ON and the bowl isn’t full.
-- Bowl fills over time while running; at max it shuts off and locks until you press Space.
-- Displays: left = desired temp, middle = current temp, right = flame (heating), snowflake (cooling), or check (target reached).
-- Bottom-right nameplate is rendered as a texture.
+   ./ac-simulator-3d
 
-## Project Structure
-- `Source/` core logic (`Main.cpp`, `State.cpp`, `TemperatureUI.cpp`, `Renderer2D.cpp`, `TextRenderer.cpp`, `Controls.cpp`, `Util.cpp`)
-- `Header/` declarations and helpers (`stb_image.h`, `ft2build.h` include)
-- `Shaders/` OpenGL shaders for base draw, text, and overlay
-- `x64/<Config>/` build outputs once you compile (Debug/Release)
+Notes
 
-## Notes
-- Default font: `C:\Windows\Fonts\arial.ttf` (see `TextRenderer.cpp`); change the path if unavailable.
+- For detailed configuration and external dependencies, consult `CMakeLists.txt`.
+- Edit shaders and assets in the `Shaders/` and `Assets/` folders respectively.
+
+Project Structure
+
+- Header/ — header files (.h/.hpp)
+- Source/ — source files (.cpp)
+- Shaders/ — GLSL or other shader files
+- Assets/ — models, textures and other resources
+- CMakeLists.txt — build configuration
